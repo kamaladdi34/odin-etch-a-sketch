@@ -38,6 +38,8 @@ function updateGridSize(gridSize)
         }
     }
     currentPixelAmount = pixelAmount;
-    console.log(`pixels with size updated:${pixelsHeight}\npixels enabled and size updated: ${pixelsHeightShown}\npixels disabled: ${pixelsDisabled}`);
+    console.log(`pixels with size updated:${pixelsHeight}`);
+    console.log(`pixels enabled and size updated: ${pixelsHeightShown}`);
+    console.log(`pixels disabled: ${pixelsDisabled}`);
     pixelsDisabled = pixelsHeight = pixelsHeightShown = 0;
 }
