@@ -21,15 +21,16 @@ updateGridSize(20);
 function updateGridSize(gridSize)
 {
     const pixelAmount = gridSize*gridSize;
+    const newPixelSize = `${containerHeight/gridSize}px`;
     let pixelsHeight = 0, pixelsHeightShown = 0,pixelsDisabled =0 ;
     for (let i = 0; i < pixels.length; i++) {
         if(i<pixelAmount && i < currentPixelAmount){
-            pixels[i].style.height = pixels[i].style.width = `${containerHeight/gridSize}px`;
+            pixels[i].style.height = pixels[i].style.width = newPixelSize;
             pixelsHeight++;
         }
         else if(i<pixelAmount){
             pixels[i].classList.remove('hidden');
-            pixels[i].style.height = pixels[i].style.width = `${containerHeight/gridSize}px`;
+            pixels[i].style.height = pixels[i].style.width = newPixelSize;
             pixelsHeightShown++;
         }else{
             pixels[i].classList.add('hidden');
