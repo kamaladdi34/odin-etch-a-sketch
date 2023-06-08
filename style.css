@@ -1,0 +1,49 @@
+*{
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: rgb(143, 165, 184);
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(232, 244, 255);
+}
+.container{
+    height: 500px;
+    display: flex;
+    align-items: stretch;
+}
+.tools{
+    background-color: rgb(245, 251, 255);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 50px;
+}
+.tool{
+    min-height: 35px;
+    background-color: rgb(236, 247, 255);
+}
+.pixel-container{
+    background-color: rgb(255, 255, 255);
+    flex-grow: 1;
+    width: 500px;
+}
+.grid-size-slider{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.grid-size-slider input{
+    appearance: slider-vertical;
+}
+.grid-size-slider input::-webkit-slider-runnable-track {
+    background-color: rgb(232, 244, 255);
+    border-radius: 20px;
+}
