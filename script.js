@@ -1,6 +1,9 @@
 const pixelContainer = document.querySelector('.pixel-container');
 const containerHeight = pixelContainer.clientHeight;
 const sizeSLider = document.querySelector('.grid-size-slider > input');
+const colorPicker = document.querySelector('#color-picker');
+let chosenColor = '#000000'
+colorPicker.addEventListener('change',(e)=>{chosenColor = e.target.value;})
 pixelContainer.addEventListener('dragstart',(e)=>{e.preventDefault()});
 let currentPixelAmount = 0;
 let pixels = [];
@@ -73,6 +76,6 @@ pixelContainer.addEventListener('mouseover',(e)=>{
 });
 function colorPixel(pixel)
 {
-    pixel.style.backgroundColor='lime';
+    pixel.style.backgroundColor = chosenColor;
     pixel.classList.add('colored-pixel');
 }
