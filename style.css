@@ -24,11 +24,13 @@ body{
     align-items: center;
     gap: 5px;
     width: 50px;
+    padding: 5px;
 }
 .tool{
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
     background-color: rgb(236, 247, 255);
+    border-radius: 90px;
 }
 .pixel-container{
     background-color: rgb(255, 255, 255);
@@ -63,3 +65,11 @@ body{
 .hidden{
     display: none;
 }
+#color-picker{
+    opacity: 0;
+}
+#color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+  }

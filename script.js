@@ -2,8 +2,14 @@ const pixelContainer = document.querySelector('.pixel-container');
 const containerHeight = pixelContainer.clientHeight;
 const sizeSLider = document.querySelector('.grid-size-slider > input');
 const colorPicker = document.querySelector('#color-picker');
-let chosenColor = '#000000'
-colorPicker.addEventListener('change',(e)=>{chosenColor = e.target.value;})
+const fakeColorPicker = document.querySelector('.color-picker-fake');
+let chosenColor = '#000000';
+fakeColorPicker.style.backgroundColor = chosenColor;
+colorPicker.addEventListener('change',(e)=>
+{
+    chosenColor = e.target.value;
+    fakeColorPicker.style.backgroundColor = e.target.value
+})
 pixelContainer.addEventListener('dragstart',(e)=>{e.preventDefault()});
 let currentPixelAmount = 0;
 let pixels = [];
