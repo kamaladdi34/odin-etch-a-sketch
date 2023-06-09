@@ -43,3 +43,23 @@ function updateGridSize(gridSize)
     console.log(`pixels disabled: ${pixelsDisabled}`);
     pixelsDisabled = pixelsHeight = pixelsHeightShown = 0;
 }
+let isMouseDown = false;
+document.addEventListener('mousedown',(e)=>{
+    if(e.button == 0)
+    {
+        isMouseDown = true;
+    }
+})
+document.addEventListener('mouseup',(e)=>{
+    if(e.button == 0)
+    {
+        isMouseDown = false;
+    }
+})
+pixelContainer.addEventListener('mouseover',(e)=>{
+    if(e.target.classList.contains('pixel') && isMouseDown)
+    {
+        e.target.style.backgroundColor='lime';
+        e.target.classList.add('colored-pixel');
+    }
+});

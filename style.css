@@ -54,6 +54,9 @@ body{
     border: 1px solid rgb(247, 247, 247);
     background-color: white;
 }
+.colored-pixel{
+    border: none;
+}
 .hidden{
     display: none;
 }
