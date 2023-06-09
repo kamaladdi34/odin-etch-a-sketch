@@ -49,6 +49,10 @@ document.addEventListener('mousedown',(e)=>{
     {
         isMouseDown = true;
     }
+    if(isMouseDown && e.target.classList.contains('pixel'))
+    {
+        colorPixel(e.target);
+    }
 })
 document.addEventListener('mouseup',(e)=>{
     if(e.button == 0)
@@ -59,7 +63,15 @@ document.addEventListener('mouseup',(e)=>{
 pixelContainer.addEventListener('mouseover',(e)=>{
     if(e.target.classList.contains('pixel') && isMouseDown)
     {
-        e.target.style.backgroundColor='lime';
-        e.target.classList.add('colored-pixel');
+        colorPixel(e.target);
+    }
+    else if(e.target.classList.contains('pixel'))
+    {
+        lastHoveredPixel = e.target;
     }
 });
+function colorPixel(pixel)
+{
+    pixel.style.backgroundColor='lime';
+    pixel.classList.add('colored-pixel');
+}
