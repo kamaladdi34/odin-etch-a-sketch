@@ -1,6 +1,7 @@
 const pixelContainer = document.querySelector('.pixel-container');
 const containerHeight = pixelContainer.clientHeight;
 const sizeSLider = document.querySelector('.grid-size-slider > input');
+pixelContainer.addEventListener('dragstart',(e)=>{e.preventDefault()});
 let currentPixelAmount = 0;
 let pixels = [];
 sizeSLider.addEventListener('input',(e)=>{updateGridSize(sizeSLider.value)});

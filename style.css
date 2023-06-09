@@ -45,6 +45,7 @@ body{
 }
 .grid-size-slider input{
     appearance: slider-vertical;
+    max-width: 100%;
 }
 .grid-size-slider input::-webkit-slider-runnable-track {
     background-color: rgb(232, 244, 255);
