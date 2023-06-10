@@ -4,6 +4,7 @@ const sizeSLider = document.querySelector('.grid-size-slider > input');
 const colorPicker = document.querySelector('#color-picker');
 const fakeColorPicker = document.querySelector('.color-picker-fake');
 let chosenColor = '#000000';
+let coloredPixels = []
 fakeColorPicker.style.backgroundColor = chosenColor;
 colorPicker.addEventListener('change',(e)=>
 {
@@ -30,6 +31,8 @@ createPixelPpool(100);
 updateGridSize(20);
 function updateGridSize(gridSize)
 {
+    resetColoredPixels(coloredPixels);
+    coloredPixels = [];
     const pixelAmount = gridSize*gridSize;
     const newPixelSize = `${containerHeight/gridSize}px`;
     let pixelsHeight = 0, pixelsHeightShown = 0,pixelsDisabled =0 ;
@@ -84,4 +87,17 @@ function colorPixel(pixel)
 {
     pixel.style.backgroundColor = chosenColor;
     pixel.classList.add('colored-pixel');
+    coloredPixels.push(pixel);
+}
+function resetColoredPixels(pixels)
+{
+    pixels.forEach((pixel)=>{
+        resetPixel(pixel);
+    })
+    console.log(`reset ${pixels.length} pixels`);
+}
+function resetPixel(pixel)
+{
+    pixel.classList.remove('colored-pixel');
+    pixel.style.backgroundColor = 'white';
 }
