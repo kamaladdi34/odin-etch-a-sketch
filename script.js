@@ -3,8 +3,36 @@ const containerHeight = pixelContainer.clientHeight;
 const sizeSLider = document.querySelector('.grid-size-slider > input');
 const colorPicker = document.querySelector('#color-picker');
 const fakeColorPicker = document.querySelector('.color-picker-fake');
+const pencils = document.querySelectorAll('.pencil');
+let penEnabled = true;
+let eraserEnabled = false;
+let rainbowPenEnabled = false;
+pencils.forEach((pencil)=>{
+    pencil.addEventListener('click',(e)=>{
+        let pencilType = e.target.getAttribute('data-pencil-type');
+        switch(pencilType)
+        {
+            case 'pen':
+                penEnabled = true;
+                eraserEnabled =  rainbowPenEnabled = false;
+                console.log('pen');
+                break;
+            case 'eraser':
+                eraserEnabled = true;
+                penEnabled =  rainbowPenEnabled = false;
+                console.log('eraser');
+                break;
+            case 'rainbow':
+                rainbowPenEnabled = true;
+                eraserEnabled =  penEnabled = false;
+                console.log('raibow');
+                break;
+        }
+    })
+})
 let chosenColor = '#000000';
-let coloredPixels = []
+let coloredPixels = [];
+
 fakeColorPicker.style.backgroundColor = chosenColor;
 colorPicker.addEventListener('change',(e)=>
 {
@@ -76,19 +104,33 @@ document.addEventListener('mouseup',(e)=>{
 pixelContainer.addEventListener('mouseover',(e)=>{
     if(e.target.classList.contains('pixel') && isMouseDown)
     {
-        colorPixel(e.target);
+        colorPixel(e.target,chosenColor);
     }
     else if(e.target.classList.contains('pixel'))
     {
         lastHoveredPixel = e.target;
     }
 });
-function colorPixel(pixel)
+function colorPixel(pixel,color)
 {
-    pixel.style.backgroundColor = chosenColor;
+    if(eraserEnabled)
+    {
+        resetPixel(pixel);
+        return;
+    }
+    if(rainbowPenEnabled)
+    {
+        color = generateRandomColor();
+    }
+    pixel.style.backgroundColor = color;
     pixel.classList.add('colored-pixel');
     coloredPixels.push(pixel);
 }
+function generateRandomColor()
+{
+    return `rgb(${random(255)},${random(255)},${random(255)})`
+}
+const random = max => Math.floor(Math.random()*max);
 function resetColoredPixels(pixels)
 {
     pixels.forEach((pixel)=>{
