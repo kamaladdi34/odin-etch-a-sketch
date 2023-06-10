@@ -10,6 +10,7 @@ let rainbowPenEnabled = false;
 pencils.forEach((pencil)=>{
     pencil.addEventListener('click',(e)=>{
         let pencilType = e.target.getAttribute('data-pencil-type');
+        updateChosenPencil(pencils,e.target)
         switch(pencilType)
         {
             case 'pen':
@@ -30,6 +31,19 @@ pencils.forEach((pencil)=>{
         }
     })
 })
+function updateChosenPencil(pencils,chosenPencil)
+{
+    pencils.forEach(pencil=>{
+        if(pencil == chosenPencil)
+        {
+            pencil.classList.add('pencil-selected');
+        }
+        else
+        {
+            pencil.classList.remove('pencil-selected');
+        }
+    })
+}
 let chosenColor = '#000000';
 let coloredPixels = [];
 
@@ -128,7 +142,7 @@ function colorPixel(pixel,color)
 }
 function generateRandomColor()
 {
-    return `rgb(${randomBetween(255,255)},${randomBetween(150,255)},${randomBetween(150,255)})`
+    return `rgb(${randomBetween(0,255)},${randomBetween(0,255)},${randomBetween(0,255)})`
 }
 function randomBetween(min,max)
 {
