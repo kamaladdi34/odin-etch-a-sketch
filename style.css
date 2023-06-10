@@ -31,6 +31,9 @@ body{
     width: 35px;
     background-color: rgb(236, 247, 255);
     border-radius: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .pixel-container{
     background-color: rgb(255, 255, 255);
@@ -72,4 +75,8 @@ body{
     border: none;
     border-radius: 50%;
     padding: 0;
-  }
+}
+.pencil-selected{
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(151, 222, 255);
+}
