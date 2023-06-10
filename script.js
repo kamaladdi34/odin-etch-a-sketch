@@ -94,6 +94,7 @@ function resetColoredPixels(pixels)
     pixels.forEach((pixel)=>{
         resetPixel(pixel);
     })
+    console.clear();
     console.log(`reset`,pixels.length,`pixels`);
 }
 function resetPixel(pixel)
