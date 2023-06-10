@@ -27,7 +27,7 @@ function createPixelPpool(gridSize){
         pixelContainer.appendChild(createPixel(gridSize));
     }
 }
-createPixelPpool(100);
+createPixelPpool(50);
 updateGridSize(20);
 function updateGridSize(gridSize)
 {
