@@ -92,7 +92,7 @@ document.addEventListener('mousedown',(e)=>{
     }
     if(isMouseDown && e.target.classList.contains('pixel'))
     {
-        colorPixel(e.target);
+        colorPixel(e.target,chosenColor);
     }
 })
 document.addEventListener('mouseup',(e)=>{
@@ -128,9 +128,14 @@ function colorPixel(pixel,color)
 }
 function generateRandomColor()
 {
-    return `rgb(${random(255)},${random(255)},${random(255)})`
+    return `rgb(${randomBetween(255,255)},${randomBetween(150,255)},${randomBetween(150,255)})`
 }
-const random = max => Math.floor(Math.random()*max);
+function randomBetween(min,max)
+{
+    let range = max - min;
+    return random(range) + min;
+}
+const random = number => Math.floor(Math.random()*number);
 function resetColoredPixels(pixels)
 {
     pixels.forEach((pixel)=>{
