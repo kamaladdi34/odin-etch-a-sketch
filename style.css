@@ -14,7 +14,7 @@ body{
     background-color: rgb(232, 244, 255);
 }
 .container{
-    height: 500px;
+    height: fit-content;
     display: flex;
     align-items: stretch;
 }
@@ -39,7 +39,8 @@ body{
 .pixel-container{
     background-color: rgb(255, 255, 255);
     flex-grow: 1;
-    width: 500px;
+    width: 700px;
+    height: 700px;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
