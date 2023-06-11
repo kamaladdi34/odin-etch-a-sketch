@@ -7,31 +7,59 @@ const pencils = document.querySelectorAll('.pencil');
 let penEnabled = true;
 let eraserEnabled = false;
 let rainbowPenEnabled = false;
+let pixels = [];
+let currentPixelAmount = 0;
+let chosenColor = '#000000';
+let coloredPixels = [];
+let isMouseDown = false;
+fakeColorPicker.style.backgroundColor = chosenColor;
+pixelContainer.addEventListener('dragstart',(event)=>{event.preventDefault()});
+sizeSLider.addEventListener('input',(event)=>{
+    updateGridSize(sizeSLider.value)
+    resetColoredPixels(coloredPixels);
+    coloredPixels = [];
+});
+colorPicker.addEventListener('change',(event)=>
+{
+    chosenColor = event.target.value;
+    fakeColorPicker.style.backgroundColor = event.target.value
+})
+createPixelPool(50);
+updateGridSize(20);
+document.addEventListener('mousedown',(event)=>{
+    isMouseDown = event.button == 0;
+    if(isMouseDown && event.target.classList.contains('pixel'))
+    {
+        colorPixel(event.target,chosenColor);
+    }
+})
+document.addEventListener('mouseup',(event)=>{
+    if(event.button == 0)
+    {
+        isMouseDown = false;
+    }
+})
+pixelContainer.addEventListener('mouseover',(event)=>{
+    if(event.target.classList.contains('pixel') && isMouseDown)
+    {
+        colorPixel(event.target,chosenColor);
+    }
+    else if(event.target.classList.contains('pixel'))
+    {
+        lastHoveredPixel = event.target;
+    }
+});
 pencils.forEach((pencil)=>{
-    pencil.addEventListener('click',(e)=>{
-        let pencilType = e.target.getAttribute('data-pencil-type');
-        updateChosenPencil(pencils,e.target)
-        switch(pencilType)
-        {
-            case 'pen':
-                penEnabled = true;
-                eraserEnabled =  rainbowPenEnabled = false;
-                console.log('pen');
-                break;
-            case 'eraser':
-                eraserEnabled = true;
-                penEnabled =  rainbowPenEnabled = false;
-                console.log('eraser');
-                break;
-            case 'rainbow':
-                rainbowPenEnabled = true;
-                eraserEnabled =  penEnabled = false;
-                console.log('raibow');
-                break;
-        }
+    pencil.addEventListener('click',(event)=>
+    {
+        let pencilType = event.target.getAttribute('data-pencil-type');
+        updateChosenPencilUI(pencils,event.target);
+        penEnabled = pencilType == 'pen';
+        eraserEnabled = pencilType == 'eraser';
+        rainbowPenEnabled = pencilType == 'rainbow';
     })
 })
-function updateChosenPencil(pencils,chosenPencil)
+function updateChosenPencilUI(pencils,chosenPencil)
 {
     pencils.forEach(pencil=>{
         if(pencil == chosenPencil)
@@ -44,19 +72,6 @@ function updateChosenPencil(pencils,chosenPencil)
         }
     })
 }
-let chosenColor = '#000000';
-let coloredPixels = [];
-
-fakeColorPicker.style.backgroundColor = chosenColor;
-colorPicker.addEventListener('change',(e)=>
-{
-    chosenColor = e.target.value;
-    fakeColorPicker.style.backgroundColor = e.target.value
-})
-pixelContainer.addEventListener('dragstart',(e)=>{e.preventDefault()});
-let currentPixelAmount = 0;
-let pixels = [];
-sizeSLider.addEventListener('input',(e)=>{updateGridSize(sizeSLider.value)});
 function createPixel(gridSize){
     let pixel = document.createElement('div');
     pixel.classList.add('pixel');
@@ -64,30 +79,33 @@ function createPixel(gridSize){
     pixels.push(pixel);
     return pixel;
 }
-function createPixelPpool(gridSize){
+function createPixelPool(gridSize){
     for (let i = 0; i < gridSize*gridSize; i++) {
         pixelContainer.appendChild(createPixel(gridSize));
     }
 }
-createPixelPpool(50);
-updateGridSize(20);
 function updateGridSize(gridSize)
 {
-    resetColoredPixels(coloredPixels);
-    coloredPixels = [];
+
     const pixelAmount = gridSize*gridSize;
     const newPixelSize = `${containerHeight/gridSize}px`;
     let pixelsHeight = 0, pixelsHeightShown = 0,pixelsDisabled =0 ;
     for (let i = 0; i < pixels.length; i++) {
-        if(i<pixelAmount && i < currentPixelAmount){
+        if(i < pixelAmount)
+        {
             pixels[i].style.height = pixels[i].style.width = newPixelSize;
+        }
+        if(i < pixelAmount && i < currentPixelAmount)
+        {
             pixelsHeight++;
         }
-        else if(i<pixelAmount){
+        else if(i < pixelAmount)
+        {
             pixels[i].classList.remove('hidden');
-            pixels[i].style.height = pixels[i].style.width = newPixelSize;
             pixelsHeightShown++;
-        }else{
+        }
+        else
+        {
             pixels[i].classList.add('hidden');
             pixelsDisabled++;
         }
@@ -98,33 +116,6 @@ function updateGridSize(gridSize)
     console.log(`pixels disabled:`,pixelsDisabled);
     pixelsDisabled = pixelsHeight = pixelsHeightShown = 0;
 }
-let isMouseDown = false;
-document.addEventListener('mousedown',(e)=>{
-    if(e.button == 0)
-    {
-        isMouseDown = true;
-    }
-    if(isMouseDown && e.target.classList.contains('pixel'))
-    {
-        colorPixel(e.target,chosenColor);
-    }
-})
-document.addEventListener('mouseup',(e)=>{
-    if(e.button == 0)
-    {
-        isMouseDown = false;
-    }
-})
-pixelContainer.addEventListener('mouseover',(e)=>{
-    if(e.target.classList.contains('pixel') && isMouseDown)
-    {
-        colorPixel(e.target,chosenColor);
-    }
-    else if(e.target.classList.contains('pixel'))
-    {
-        lastHoveredPixel = e.target;
-    }
-});
 function colorPixel(pixel,color)
 {
     if(eraserEnabled)
@@ -132,10 +123,7 @@ function colorPixel(pixel,color)
         resetPixel(pixel);
         return;
     }
-    if(rainbowPenEnabled)
-    {
-        color = generateRandomColor();
-    }
+    color = rainbowPenEnabled? generateRandomColor() : color;
     pixel.style.backgroundColor = color;
     pixel.classList.add('colored-pixel');
     coloredPixels.push(pixel);
@@ -144,11 +132,7 @@ function generateRandomColor()
 {
     return `rgb(${randomBetween(0,255)},${randomBetween(0,255)},${randomBetween(0,255)})`
 }
-function randomBetween(min,max)
-{
-    let range = max - min;
-    return random(range) + min;
-}
+const randomBetween = (min,max) => random(max - min) + min; 
 const random = number => Math.floor(Math.random()*number);
 function resetColoredPixels(pixels)
 {
