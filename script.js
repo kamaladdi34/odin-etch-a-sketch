@@ -114,10 +114,6 @@ function updateGridSize(gridSize){
     
     currentPixelAmount = pixelAmount;
 
-    console.log(`pixels with size updated:`,pixelsHeight);
-    console.log(`pixels enabled and size updated:`,pixelsHeightShown);
-    console.log(`pixels disabled:`,pixelsDisabled);
-
     pixelsDisabled = pixelsHeight = pixelsHeightShown = 0;
 }
 
@@ -145,9 +141,6 @@ function resetColoredPixels(pixels){
     pixels.forEach((pixel) => {
         resetPixel(pixel);
     })
-
-    console.clear();
-    console.log(`reset`,pixels.length,`pixels`);
 }
 
 function resetPixel(pixel){
